@@ -1,7 +1,0 @@
-keccak                  Keccak Cryptographic Hash Algorithms
-secretbase-package      secretbase: Cryptographic Hash and
-                        Extendable-Output Functions
-sha256                  SHA-256 Cryptographic Hash Algorithm
-sha3                    SHA-3 Cryptographic Hash Algorithms
-shake256                SHAKE256 Extendable Output Function
-siphash13               SipHash Pseudorandom Function

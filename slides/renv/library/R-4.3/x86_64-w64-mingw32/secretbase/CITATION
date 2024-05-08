@@ -1,6 +1,0 @@
-bibentry(bibtype = "Manual",
-         title = "secretbase: Cryptographic Hash and Extendable-Output Functions",
-         author = person("Charlie", "Gao"),
-         year = 2024,
-         note = sprintf("R package version %s", meta$Version),
-         url = "https://doi.org/10.5281/zenodo.10553139")
