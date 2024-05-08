@@ -1,0 +1,134 @@
+---
+title: "Xaringan CSS Theme Generator"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Overview of xaringanthemer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  results = "asis",
+  echo = FALSE,
+  comment = "#>",
+  out.width = "100%"
+)
+library(xaringanthemer)
+```
+
+```{css echo=FALSE}
+img { max-width: 100%; }
+```
+
+[xaringan]: https://github.com/yihui/xaringan
+[remarkjs]: https://github.com/gnab/remark
+
+Jump to: 
+[Quick Intro](#quick-intro), 
+[Themes](#themes), 
+[Theme Settings](#theme-settings), 
+[Fonts](#fonts),
+[Colors](#colors),
+[Adding Custom CSS](#adding-custom-css)
+
+## Quick Intro
+
+[theme-functions]: #themes
+[theme-settings]: #theme-settings
+[template-variables]: template-variables.html
+
+```{r child="../man/fragments/_quick-intro.Rmd"}
+```
+
+## Themes
+
+```{r child="../man/fragments/_themes.Rmd"}
+```
+
+## Theme Settings
+
+The theme functions listed above are just wrappers around the central function of this package, `style_xaringan()`.
+If you want to start from the default **xaringan** theme and make a few modifications, start there.
+
+All of the theme template variables are repeated in each of the theme functions (instead of relying on `...`) so that you can use autocompletion to find and change the defaults for any theme function.
+To override the default value of any theme functions, set the appropriate argument in the theme function.
+A table of all template variables is included in [`vignette("template-variables", "xaringanthemer")`](template-variables.html).
+
+As an example, try loading `xaringanthemer`, type out `style_duo_theme(` and then press <kbd>Tab</kbd> to see all of the theme options.
+
+All of the theme options are named so that you first think of the element you want to change, then the property of that element.
+
+Here are some of the `text_` theme options:
+
+```{r, results='asis', echo=FALSE}
+tvv <- xaringanthemer:::template_variables$variable
+cat(paste0("- `", tvv[grepl("^text_", tvv)][1:5], "`"), sep = "\n")
+cat("- *and more ...*")
+```
+
+And here are the title slide theme options:
+
+```{r results='asis', echo=FALSE}
+cat(paste0("- `", tvv[grepl("^title_slide_", tvv)], "`"), sep = "\n")
+```
+
+## Fonts
+
+[adding-custom-css]: #adding-custom-css
+
+```{r child="../man/fragments/_fonts.Rmd"}
+```
+
+## Colors
+
+```{r child="../man/fragments/_colors.Rmd"}
+```
+
+## Adding Custom CSS
+
+You can also add custom CSS classes using the `extra_css` argument in the theme functions.
+This argument takes a named list of CSS definitions each containing a named list of CSS property-value pairs.
+
+```r
+extra_css <- list(
+  ".small" = list("font-size" = "90%"),
+  ".full-width" = list(
+    display = "flex",
+    width   = "100%",
+    flex    = "1 1 auto"
+  )
+)
+```
+
+If you would rather keep your additional css definitions in a separate file, you can call `style_extra_css()` separately.
+Just be sure to include your new CSS file in the list of applied files in your YAML header.
+
+```r
+style_extra_css(css = extra_css, outfile = "custom.css")
+```
+
+```{r results='asis', echo=FALSE}
+extra_css <- list(
+  ".small" = list("font-size" = "90%"),
+  ".full-width" = list(
+    display = "flex",
+    width   = "100%",
+    flex    = "1 1 auto"
+  )
+)
+cat(
+  "\n```css",
+  "/* Extra CSS */",
+  xaringanthemer:::list2css(extra_css),
+  "```",
+  sep = "\n"
+)
+```
+
+This is most helpful when wanting to define helper classes to work with the [remark.js][remarkjs] `.class[]` syntax.
+Using the above example, we could add slide text `.small[in smaller font size]`.
+
+```{r child="../man/fragments/_thanks.Rmd"}
+```

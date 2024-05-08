@@ -1,0 +1,28 @@
+Package: secretbase
+Type: Package
+Title: Cryptographic Hash and Extendable-Output Functions
+Version: 0.5.0
+Description: Fast and memory-efficient streaming hash functions. Performs direct hashing of strings, raw bytes, and files potentially larger than memory, as well as hashing in-memory objects through R's serialization mechanism, without requiring allocation of the serialized object. Implementations include the SHA-256, SHA-3 and 'Keccak' cryptographic hash functions, SHAKE256 extendable-output function (XOF), and 'SipHash' pseudo-random function. The SHA-3 Secure Hash Standard was published by the National Institute of Standards and Technology (NIST) in 2015 at <doi:10.6028/NIST.FIPS.202>. The SHA-256 Secure Hash Standard was published by NIST in 2002 at <https://csrc.nist.gov/publications/fips/fips180-2/fips180-2.pdf>.
+Authors@R: c(person(given = "Charlie", family = "Gao", role = c("aut", "cre"), email = "charlie.gao@shikokuchuo.net", comment = c(ORCID = "0000-0002-0750-061X")), person(given = "Hibiki AI Limited", role = "cph"))
+License: GPL (>= 3)
+BugReports: https://github.com/shikokuchuo/secretbase/issues
+URL: https://shikokuchuo.net/secretbase/,
+    https://github.com/shikokuchuo/secretbase/
+Encoding: UTF-8
+Depends: R (>= 3.5)
+RoxygenNote: 7.3.1
+NeedsCompilation: yes
+Packaged: 2024-04-25 07:10:43 UTC; cg334
+Author: Charlie Gao [aut, cre] (<https://orcid.org/0000-0002-0750-061X>), Hibiki AI Limited [cph]
+Maintainer: Charlie Gao <charlie.gao@shikokuchuo.net>
+Repository: RSPM
+Date/Publication: 2024-04-25 07:40:02 UTC
+Built: R 4.3.0; x86_64-w64-mingw32; 2024-04-26 04:58:12 UTC; windows
+Archs: x64
+RemoteType: standard
+RemotePkgRef: secretbase
+RemoteRef: secretbase
+RemoteRepos: https://packagemanager.posit.co/cran/latest
+RemoteReposName: CRAN
+RemotePkgPlatform: x86_64-w64-mingw32
+RemoteSha: 0.5.0

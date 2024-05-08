@@ -1,0 +1,82 @@
+---
+title: 'MY560: Reproducible Pipelines Code Walkthrough -- Tiers 1 and 2'
+author: "Daniel de Kadt"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tier 1: Code-based, Structured, Firewalled Workflow
+
+In **Tier 1** we have a few basic principles we want to nail. First, we want everything to be as **code-based** as possible. That means no manually switching working directories, and absolutely no manually touching data. Second, we want our drive to be hygienically and logically structured. One important element here is that we don't want **multiple versions** of data and outputs floating around. That means we want to overwrite our outputs, and overwrite any intermediate or cleaned data we process. Third, we want a **firewall** between the raw data, any intermediate/cleaned versions, and any analysis we do. In a larger workflow you might want to save intermediate versions of the data (so you don't have to run the sometimes costly/slow cleaning script multiple times), but just make sure you do this using code. 
+
+Remember: The firewall is a **bright line**. You should (1) never touch data without a code-based firewall between you and the data, and (2) you should never overwrite the raw data (even if using code to do so).
+
+The first thing we want to do is write some setup code that will mean we don't have to do much manually. But note that even though we are using relative pathing, we are still hardcoding the folder structure -- be wary about doing too much of this, and as much as you can move this type of thing to the highest level of the script that you can do. You **definitely** don't want hard-coded pathfiles deep inside your script, especially if it is a WET script! Because what happens if you change your folder structure...
+
+```{r script setup}
+# some setup: a cheeky little bit of code to check and install packages
+need <- c("tidyverse","stargazer") # list packages needed
+have <- need %in% rownames(installed.packages()) # checks packages you have
+if(any(!have)) install.packages(need[!have]) # install missing packages
+invisible(lapply(need, library, character.only=T)) # load needed packages
+ 
+# some more setup: pathing and folder structure
+table_dir <- "./output/tables/"
+figure_dir <- "./output/figures/"
+data_folder <- "./data/raw/"
+```
+
+Next up we want to ingest, clean, and munge the data:
+
+```{r ingestion and cleaning and munging}
+# let's start by ingesting the data
+file <- "WHR_2017.csv"
+data <- read_csv(paste0(data_folder,file))
+head(data)
+
+# now we will do a little data munging to two variables of interest. we will standardize these two variables. 
+variables <- c("Happiness_score", "GDP_pc")
+
+scaled_data <- data %>%
+  mutate_at(variables, scale)
+
+# let's just inspect the data, and check that it actually changed...
+head(scaled_data)
+
+data$Happiness_score[1] == scaled_data$Happiness_score[1] # should be FALSE -- we could code up a warning here if we want
+
+# if we wanted to write an intermediate/clean version, we could do so, making sure not to overwrite the original data
+saveRDS(scaled_data, "./data/processed/WHR_2017_processed.rds")
+```
+
+Finally, we can run some analyses:
+
+```{r analysis}
+# we could call the cleaned data back into R at this point if we want (or not):
+scaled_data <- readRDS("./data/processed/WHR_2017_processed.rds")
+
+# next we will make a very simple two-way scatter of these two scaled. let's save the output to our output folder.
+plot <- ggplot(scaled_data) +
+          geom_point(aes(x = GDP_pc, y = Happiness_score)) +
+          theme_minimal()
+ggsave(plot, file = paste0(figure_dir,"plot_gdp_pc.jpg"))
+
+# finally, let's run a simple regression of these two variables, and save the output as a latex table.
+lm(Happiness_score ~ GDP_pc, data = data)  |>
+  stargazer(out = paste0(table_dir,"table_gdp_pc.tex"))
+
+# clean up the workspace again:
+rm(list = ls())
+```
+
+We've already done some good things here. Everything is code-based, our folder strucutre is logical and easy to follow, and the data are firewalled. 
+
+If Tier 1 is where you end your reproducibility workflow (which is ok!), you will typically have each of the chunks of code below saved a distinct script (e.g. "setup.R", "cleaning.R", and "analysis.R"). You can then run them each, or better yet, use `source()` to run them sequentially from a top-level file called something like "runner.R". Honestly, for short projects (e.g. if you are just making a single figure to include in an experimental prompt, or building a randomization scheme), this might well be sufficient. Everything **is** reproducible -- someone could go back and re-run the code and reproduce what you did (though beware the need for `set.seed()` if you are using any rng). 
+
+## Tier 2: Documented, Version-controlled
+
+The next tier is pretty straightforward. We want to make sure what we are doing is **well documented** and that we use appropriate version control. Most people use `git` for version control, either through github or gitlab.

@@ -1,0 +1,62 @@
+---
+title: 'MY560: Reproducible Pipelines Code Walkthrough -- Tier 4'
+author: "Daniel de Kadt"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# general structure: {[language] [chunk_name], [chunk_options]}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+One problem with our pipeline so far is that things are still a bit scripty (we still have `runner.R`, for example), and we have left one potentially very important step in manual mode: updating our paper with refreshed results. There are some ways we could improve the prior pipeline in this regard -- for example if we are willing to pay for Overleaf you can integrate your project with either Dropbox or Github to automatically refresh results. Alternatively, if you still work with local .tex files, as long as you are careful about pathing you can just recompile your document and be somewhat safe. 
+
+An alternative approach is to use a notebook style approach, for example `RMarkdown` or `Quarto`. These tools have become increasingly popular because they facilitate "literate programming" -- clear descriptions of what we are doing, interspersed with code. Basically, what we've been doing so far. 
+
+However, not everyone likes the notebook approach (I don't really) -- one of the downsides is that it tends to encourage stream-of-consciousness reporting, and can often be quite unsightly and hard to follow for readers who **don't** want to see all the code as they read. We won't spend too much time on this (we've been using `RMarkdown` this whole time after all. But below I offer some guidance for how to use `RMarkdown` (not `Quarto`, but you can do the same there) to produce readable reports and papers. 
+
+## Tier 4: RMarkdown Notebook
+
+First, note two things: 1) in the `setup` chunk above, we set `knitr::opts_chunk$set(echo = FALSE)` so that code is not included (echoed) by default in code chunks; 2) we add a specific chunk at the end of the file to collect and print *all* the code in the Rmarkdown file as a code appendix. You can choose not to include this if you want, but it's good practice for many types of reports. 
+
+For example, we could include our program that we wrote before (well, slightly modified) to produce the figure we made at this point in the document. Obviously you probably wouldn't want to do exactly this in a document (you'd probably not do the cleaning repeatedly in chunks like these), but for our purposes it's ok.
+
+```{r plot_example, message=FALSE, warning=FALSE, results='hide'}
+source("./R/functions/functions.R")
+
+plot_program <- function(table_dir = "./output/tables/", 
+                        figure_dir = "./output/figures/", 
+                        file = "./data/raw/WHR_2017.csv", 
+                        pkgs = c("tidyverse","stargazer")){
+
+  invisible(package_check(pkgs))
+  
+  yvar = "Happiness_score"
+  xvar = "GDP_pc"
+  
+  data <- ingest_data(file)
+  data_scaled <- scale_data(data, c("Happiness_score", "GDP_pc"))
+  simple_plot(data_scaled, yvar = yvar, xvar = xvar, outdir = figure_dir, fname = "plot_gdp_pc_function.jpg")
+}
+
+plot_program()
+```
+
+In specific instances, however, you might want to actually report your code in-line. We can override the default behaviour by adding the chunk option `echo = TRUE` to a specific R chunk. When `echo=TRUE`, your code is presented in-line with any output displayed afterwards. The same code will also be included in the appendix at the bottom of the document (which is fine).
+
+```{r echo_example, echo=TRUE}
+# here we use echo=TRUE to override our global options and make the chunk appear exactly here. 
+
+print("This code chunk is visible in this section.")
+```
+
+And finally our report concludes...
+
+## Code Appendix
+
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE} 
+# this chunk generates the complete code appendix. 
+# eval=FALSE tells R not to run (``evaluate'') the code here (it was already run before).
+```
+

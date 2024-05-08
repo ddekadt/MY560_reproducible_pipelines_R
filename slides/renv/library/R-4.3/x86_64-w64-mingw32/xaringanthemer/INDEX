@@ -1,0 +1,29 @@
+apply_alpha             Add alpha to hex color
+choose_dark_or_light    Choose dark or light color
+google_font             Specify Google Font
+google_language_codes   List Valid Google Language Codes
+lighten_darken_color    Generate lighter or darker version of a color
+scale_xaringan          Themed ggplot2 Scales
+style_duo               Duotone Theme
+style_duo_accent        Duotone Accent Theme
+style_duo_accent_inverse
+                        Duotone Accent Inverse Theme
+style_extra_css         Add Extra CSS Styles
+style_mono_accent       Monotone Accent Theme
+style_mono_accent_inverse
+                        Monotone Accent Inverse Theme
+style_mono_dark         Monotone Dark Theme
+style_mono_light        Monotone Light Theme
+style_solarized_dark    Solarized Dark Theme
+style_solarized_light   Solarized Light Theme
+theme_xaringan          A Plot Theme for ggplot2 by xaringanthemer
+theme_xaringan_base     The ggplot2 xaringanthemer base plot theme
+theme_xaringan_get_value
+                        Get the Value of xaringanthemer Style Setting
+theme_xaringan_inverse
+                        An Inverse Plot Theme for ggplot2 by
+                        xaringanthemer
+theme_xaringan_set_defaults
+                        Set and Restore ggplot2 geom Defaults
+xaringanthemer_font_default
+                        Write A Customized Xaringan Theme

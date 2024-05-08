@@ -1,0 +1,30 @@
+Package: base64url
+Type: Package
+Title: Fast and URL-Safe Base64 Encoder and Decoder
+Version: 1.4
+Authors@R: c( person("Michel", "Lang", NULL, "michellang@gmail.com", role = c("cre", "aut"), comment = c(ORCID = "0000-0001-9754-0393")), person(NULL, "Apache Foundation", NULL, NULL, role = c("ctb", "cph")), person(NULL, "Free Software Foundation", NULL, NULL, role = c("ctb", "cph")) )
+Description: In contrast to RFC3548, the 62nd character ("+") is replaced with "-", the 63rd character ("/") is replaced with "_". Furthermore, the encoder does not fill the string with trailing "=". The resulting encoded strings comply to the regular expression pattern "[A-Za-z0-9_-]" and thus are safe to use in URLs or for file names. The package also comes with a simple base32 encoder/decoder suited for case insensitive file systems.
+URL: https://github.com/mllg/base64url
+BugReports: https://github.com/mllg/base64url/issues
+NeedsCompilation: yes
+License: GPL-3
+Encoding: UTF-8
+Imports: backports (>= 1.1.0)
+Suggests: base64enc, checkmate, knitr, microbenchmark, openssl, rmarkdown,
+    testthat
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+Packaged: 2018-05-14 09:41:23 UTC; lang
+Author: Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>), Apache Foundation [ctb, cph], Free Software Foundation [ctb, cph]
+Maintainer: Michel Lang <michellang@gmail.com>
+Repository: RSPM
+Date/Publication: 2018-05-14 09:58:28 UTC
+Built: R 4.3.0; x86_64-w64-mingw32; 2024-01-23 01:54:59 UTC; windows
+Archs: x64
+RemoteType: standard
+RemotePkgRef: base64url
+RemoteRef: base64url
+RemoteRepos: https://packagemanager.posit.co/cran/latest
+RemoteReposName: CRAN
+RemotePkgPlatform: x86_64-w64-mingw32
+RemoteSha: 1.4

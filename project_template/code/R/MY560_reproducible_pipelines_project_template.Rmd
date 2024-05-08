@@ -1,0 +1,63 @@
+---
+title: "MY560: Reproducible Pipelines in R -- Project Template"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+With this notebook we will produce a small data science project using a reproducible pipeline. The goal of the project is to make a nice map of the 2018 London Ward Election results, showing which party won each Ward. This is a little tricky as each ward has 3 elected councillors. You will need to decide how to approach that problem! Feel free to embellish the map as you see fit. 
+
+We will keep all the outputs in a single notebook, so you don't need to worry about saving files anywhere. 
+
+If you have forked the main workshop repo you can also use `git` for version control on this document. Don't go overboard though, you'll lose a lot of time. If you would like to you could also set up a brand new repo for this project. 
+
+## Project Setup
+
+If you want to use `renv` or `groundhog` set them up now. If you want to use `targets`, we will first need to know the landscape of data and functions we will use, and then come back to orchestrating them once we have them written. But for now we can set up the target file so it is ready to use.
+
+```{r project setup}
+source("./functions/functions.R")
+
+pkgs <- c("ggplot2", "targets")
+invisible(groundhog_package_check(pkgs, Sys.Date()-7))
+
+use_targets()
+
+```
+## Data Acquisition and Ingestion
+
+Your first task is to download two things from the web, and store them in the appropriate location in your (pre-specified, but potentially incomplete) folder structure:
+
+1. A shapefile of London's 2018 wards. The shapefile is available [here](https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london).
+2. A dataset of London's 2018 ward-level election results. The data are available [here](https://data.london.gov.uk/dataset/borough-council-election-results-2018).
+
+Remember, **do as much as you can** with code, and with functions. For example, you can use the `download.file()` function to download files into specified directories, and then `unzip` to extract the files as necessary. But also remember to wrap these functions in functions! See the pre-written example function in the `functions.R` file for inspiration. You can start your workflow by writing literal code here, then wrapping it up as a function, and then moving it to the `functions.R` file when ready. Then you can source it and execute it in the chunk below.
+
+```{r acquisition}
+
+```
+
+## Data Cleaning and Munging
+
+Once we have the data in a visible and appropriate location, ingest it into `R` and clean it:
+
+```{r ingestion}
+
+```
+
+There is going to be a fair bit of cleaning you will need to do, as the results are in a long candidate-ward format -- we see the votes cast for each candidate within each ward. You will also want to connect the cleaned election data with the shapefile you downloaded earlier. To handle the shapefile (`.shp`), use the `sf` package (with function `read_sf()` to ingest). 
+
+```{r cleaning}
+
+```
+
+## Data Visualisation
+
+For the analysis step, we will focus only on visualisation. You can use either `ggplot2` or `tmap` -- I prefer the latter, but many prefer the former. But remember, whatever you do, everything should be functions!
+
+```{r mapping}
+
+```

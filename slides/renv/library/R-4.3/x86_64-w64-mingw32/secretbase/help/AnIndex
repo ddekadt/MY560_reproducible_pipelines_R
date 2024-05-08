@@ -1,0 +1,7 @@
+secretbase-package	secretbase-package
+keccak	keccak
+secretbase	secretbase-package
+sha256	sha256
+sha3	sha3
+shake256	shake256
+siphash13	siphash13

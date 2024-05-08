@@ -1,0 +1,18 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+data|stem|041b289732906343|d4e24e6984b09e89|a114b7c663430cc0|33550471||t19851.6929221462s|efb5cf8f64540c85|8454|rds|local|vector|||0.58||
+data_scaled|stem|1d23cb615f898472|6fdbf3d65693b21d|f7cfb0ff52a38ec3|1837743234||t19851.8802400015s|ecdb00721cffe201|8625|rds|local|vector|||0.02||
+figure_dir|object|3a8daea0c6b79ff7|||||||||||||||
+file|stem|9ba835eca0406b32|e15507ff69fdbb4f|2c530c1562a7fbd1|1735323524|./data/raw/WHR_2017.csv|t19851.5833564815s|d86f2f60eabb9061|12670|file|local|vector|||0.53||
+get_data|function|406c49a2fcda773f|||||||||||||||
+ingest_data|function|406c49a2fcda773f|||||||||||||||
+model|stem|e0358d509e523d73|5fb6435e40dd312e|8f8593e0adfce7e7|808688450||t19851.5927746113s|42194ad3c25b5223|10421|rds|local|vector|||0.01||
+model_gdp_pc|stem|9b56e802a0f418c1|629a3b4cc80a963a|c1e27a46cacadfcc|-1296183384||t19851.8849815205s|87acf94f6e8bd357|91|rds|local|vector|||0.32||
+model_life_exp|stem|c9ffd6e6f6d40fd0|835d2a13f62f048b|c1e27a46cacadfcc|-722350730||t19851.8849858492s|7397575560806503|93|rds|local|vector|||0.16||
+package_check|function|a14516b46993b1bd|||||||||||||||
+plot|stem|5e9de7502765b7ad|5aff80dd826e4eae|28ace8e99923f0e5|874984291||t19851.5927738715s|2ec1615eba2b3a3d|104866|rds|local|vector|||0.02||
+plot_gdp_pc|stem|d04995e048c83f1c|49b77a457016373d|1115e1172ecfc8e5|-1210789714||t19851.8849839795s|cb0aacb8bbe5a1c9|567|rds|local|vector|||0.2|length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed|
+plot_life_exp|stem|9d1ea53cc07223dd|180177209f87bd5e|1115e1172ecfc8e5|-525785958||t19851.8849778385s|cb0aacb8bbe5a1c9|567|rds|local|vector|||0.33|length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed. length of NULL cannot be changed|
+scale_data|function|0a0d5c5525cead70|||||||||||||||
+simple_plot|function|9465590da0829943|||||||||||||||
+simple_reg|function|c9b305548571a5dc|||||||||||||||
+table_dir|object|a4b365b63b431088|||||||||||||||

@@ -1,0 +1,55 @@
+---
+title: 'MY560: Reproducible Pipelines Code Walkthrough'
+author: "Daniel de Kadt"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tier 5: Groundhog for Package Dependencies
+
+The best thing about `R` is all the packages. This is also the worst thing about `R` in terms of reproducibility, because packages change over time. Here we will walk through using `groundhog` for package version freezing. The primary alternative for this is `renv`, which is a more sophisticated but also heavier package. For most academic uses I think `groundhog` is sufficient, while `renv` is useful for more intense applications (and plays nicely with `targets` below), and for those who like using R projects (which we aren't doing here). You can see more about groundhog [here](https://groundhogr.com/), and `renv` [here](https://rstudio.github.io/renv/articles/renv.html).
+
+```{r groundhog}
+
+library(groundhog)
+
+groundhog.date <- Sys.Date()-7
+pkgs <- c("tidyverse", "targets")
+groundhog::groundhog.library(pkgs, groundhog.date)
+
+```
+
+What's going on in the above code chunk? Essentially, we specify a date (this date can evolve as we work on the project, but should be locked/hard-coded once our project is 'complete'). We then specify particular packages. And then we ask groundhog to load the date-specific version of those packages. 
+
+## Tier 5: Targets for Dependency Detection
+
+We're now going to experiment with an automated workflow with understood dependencies. We will use the package `targets` to do so. The idea here is that we will build a directed acyclic graph (DAG) that represents the various objects (function!) in our workflow, and how they are connected.
+
+```{r targets}
+use_targets()
+tar_manifest()
+tar_visnetwork()
+
+# now we execute the files, and look at our results
+tar_make()
+tar_read(model_life_exp)
+tar_read(model_gdp_pc)
+tar_read(plot_life_exp)
+tar_read(plot_gdp_pc)
+
+# let's re-inspect our workflow: 
+tar_visnetwork()
+
+# now let's go and edit our functions... then check the network... then re-run
+tar_visnetwork()
+tar_make()
+```
+
+One thing to note: I'm not 100% sure at this point how `groundhog` and `targets` interact. If you want to use package freezing and `targets`, it seems that `renv` is well supported -- there is a `tar_renv()` function in `targets`. 
+
+
+

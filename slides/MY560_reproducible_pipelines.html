@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MY560: Reproducible Pipelines for Social Scientific Research in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Daniel de Kadt" />
+    <meta name="date" content="2024-05-08" />
+    <script src="libs/header-attrs-2.26/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# MY560: Reproducible Pipelines for Social Scientific Research in <code>R</code>
+]
+.author[
+### Daniel de Kadt
+]
+.institute[
+### London School of Economics
+]
+.date[
+### 2024-05-08
+]
+
+---
+
+
+
+
+---
+
+class: left, top
+
+## Welcome!
+
+Today I am going to offer you a **highly opinionated introduction** to reproducible pipelines for social science in `R`. 
+
+--
+
+What I present is not **right** -- there are **many routes** to reproducibility, and in fact many people will disagree with what I say. That's ok! 
+
+--
+
+What we will do today:
+
+1. The **lecture** bit: I will talk for a while
+2. The **fundamentals** bit: We will do a guided git / coding session
+3. The **practical** bit: You will work on a data science project and generate a reproducible pipeline
+
+--
+
+What you will need for the session: 
+
+1. A github account
+2. `R` and either RStudio, VSCode, or similar IDE installed
+
+The repo for the workshop can be found at ... . Fork or clone and follow along.
+
+---
+
+class: left, top
+
+## Welcome!
+
+Who am I (and who am I not)? 
+
+--
+
+I am an applied social scientist, with some experience in **academia and tech**.
+
+--
+
+I am **not** a computer scientist! I am also **not** a developer!
+
+--
+
+I will present this from the perspective of an applied researcher who works extensively with (sometimes large scale) data, not from the perspective of someone writing `R` packages, nor someone writing production-ready code. 
+
+--
+
+What I will present is **introductory**. This is a fast moving space, and **everyone** has opinions about 'best practices.' I find this quite overwhelming myself, and try to think about it in the old photographer's maxim: 'The best camera is the one you have with you.'
+
+--
+
+I hope you will use this material as a starting point for your own exploration of reproducible workflows that **work for you**. 
+
+
+---
+
+class: center, middle
+
+# Motivation
+
+???
+Section Title Slide
+
+---
+
+class: left, top
+
+## A Typical Workflow
+
+Let's define a typical workflow for data-intensive social science as a **pipeline**:
+
+--
+
+1. Ingestion: Acquire and read in raw data
+2. Transformation: Turning raw data into usable data
+3. Analysis: Extracting meaning from the usable data
+4. Output: Format and produce results (tables, figures)
+5. Reporting: Putting the results into paper/slides
+
+Note: In the data/analytics engineering world the first two parts of this are called an **ETL** (extract, load, transform) or **ETL** pipeline. 
+
+--
+
+A few key things to note about such pipelines:
+
+--
+
+- Process is **long** in temporal and code terms.
+- Many **decision-points** throughout.
+- Many **dependencies** between steps.
+
+---
+
+background-image: url("images/air_canada_759.jpg")
+background-size: contain
+
+--
+background-image: url("images/sfo_taxiway.png")
+background-size: contain
+
+--
+background-image: url("images/air_canada_759.gif")
+background-size: contain
+
+???
+
+Image credit: [Wikimedia Commons]
+
+---
+
+class: left, top
+
+## Why Should You Care?
+
+Some things to note: 
+
+--
+
+- Captain had 20,000+ flight hours, 4,800 on the A320 
+- First officer had 10,000+ flight hours, 2,400 on type. 
+- Captain had flown into San Francisco many times.
+
+--
+
+Experts **make mistakes**!
+
+--
+
+- Stressful conditions `\(\rightarrow\)` errors
+- Fatigue `\(\rightarrow\)` errors
+- Teamthink `\(\rightarrow\)` errors
+- Mental models + confirmation bias `\(\rightarrow\)` errors
+
+--
+
+Repeat after me: "I will **never be mistake free**."
+
+--
+
+Instead, focus on **error prevention, detection, and mitigation**
+
+---
+
+class: left, top
+
+## Errors and Dishonesty in Science
+
+The **same dynamics** are at play in scientific research:
+
+--
+
+- Academia is high-stress `\(\rightarrow\)` errors (and even dishonesty) 
+- Academics get project fatigue (mental and physical) `\(\rightarrow\)` errors
+- Team science is hierarchical `\(\rightarrow\)` errors (and misbehaviour)
+- Mental models + confirmation bias `\(\rightarrow\)` errors
+
+--
+
+Scientists **make mistakes** and sometimes misbehave. Much of this happens in the **pipeline**.
+
+--
+
+A few different flavours (non-exhaustive): 
+
+1. Technical errors: mis-specified analyses, mis-implemented analyses, mis-coding data, etc.
+2. Reasoning errors: forking paths, unconscious p-hacking, mis-reporting results, etc.
+3. Actual dishonesty: fabricating data, manipulating data, massaging results and specifications, etc.
+
+---
+
+class: left, top
+
+## Before We Run Through Motivating Examples
+
+**Do not be pejorative** (for the most part)!
+
+--
+
+Be like the airline industry: Handle errors (e.g. Canada 759) with a **bias toward non-pejorativeness**. 
+
+--
+
+For example, to this day the identities of the pilots of Air Canada 759 are not publicly known!
+
+--
+
+If we accept that **everyone makes mistakes** (they do), don't judge harshly those whose mistakes are 'exposed.' 
+
+--
+
+Instead, learn from the mistakes that are surfaced, and do so with **humility and empathy**.  
+
+--
+
+There are **definitely errors in my own work** (I've caught some, but I've surely missed others). All we can do is **keep trying to improve**, and keep learning from each other.
+
+--
+
+A quick TW: The first paper I'm going to discuss studies sexual violence. 
+
+---
+
+## Example: Technical Errors
+
+.pull-left[
+- Consider Ciacci (2024, _Journal of Population Economics_): criminalising sex work `\(\uparrow\)` rape
+]
+
+.pull-right[
+![an image](images/ciacci0.jpg)
+]
+
+---
+## Example: Technical Errors
+
+.pull-left[
+- Consider Ciacci (2024, _Journal of Population Economics_): criminalising sex work `\(\uparrow\)` rape
+- The paper **erroneously** implements a two-way fixed effects estimator in Stata.
+]
+
+.pull-right[
+![an image](images/ciacci1.jpg)
+]
+
+---
+## Example: Technical Errors
+
+.pull-left[
+- Consider Ciacci (2024, _Journal of Population Economics_): criminalising sex work `\(\uparrow\)` rape
+- The paper **erroneously** implements a two-way fixed effects estimator in Stata.
+- Adema, Folke, and Rickne (2024) diagnose a  **computational problem**.
+]
+
+.pull-right[
+![an image](images/ciacci2.jpg)
+]
+
+---
+
+## Example: Technical Errors
+
+.pull-left[
+- Consider Ciacci (2024, _Journal of Population Economics_): criminalising sex work `\(\uparrow\)` rape
+- The paper **erroneously** implements a two-way fixed effects estimator in Stata.
+- Adema, Folke, and Rickne (2024) diagnose a **computational problem**.
+- What happened? The point estimate was all seasonal variation.
+]
+
+.pull-right[
+![an image](images/ciacci3.jpg)
+]
+
+---
+
+class: left, top
+
+## Example: (Alleged) Dishonesty
+
+.pull-left[
+- Consider LaCour and Green (2014, _Science_): randomized conversations with gay canvassers `\(\uparrow\)` tolerance
+]
+
+.pull-right[
+![an image](images/lacour0.jpg)
+]
+
+---
+
+class: left, top
+
+## Example: (Alleged) Dishonesty
+
+.pull-left[
+- Consider LaCour and Green (2014, _Science_): randomized conversations with gay canvassers `\(\uparrow\)` tolerance
+- Broockman, Kalla, and Aronow (2015) diagnose alleged fraud by LaCour.
+]
+
+.pull-right[
+![an image](images/lacour1.jpg)
+]
+
+---
+
+class: left, top
+
+## Example: (Alleged) Dishonesty
+
+.pull-left[
+- Consider LaCour and Green (2014, _Science_): randomized conversations with gay canvassers `\(\uparrow\)` tolerance
+- Broockman, Kalla, and Aronow (2015) diagnose **alleged fraud** by LaCour.
+- What happened? No data was ever collected, it was taken from a publicly available survey and **manipulated**. 
+]
+
+.pull-right[
+![an image](images/lacour2.jpg)
+]
+
+---
+
+class: left, top
+
+## Our Goal 
+
+Use the principles and practices of **reproduciblity** to **(1)** reduce errors in our science, **(2)** practice transparency, and **(3)** make our lives a bit easier. 
+
+These goals becomes increasingly salient in team science settings. 
+
+--
+
+**Goal 1**: Improve our handling of errors
+- Prevention: Control opportunities for mistakes
+- Detection: Find them when they happen
+- Mitigation: Fix them (and downstream dependencies) **properly**
+
+---
+
+class: left, top
+
+## Our Goal 
+
+Use the principles and practices of **reproduciblity** to **(1)** reduce errors in our science, **(2)** practice transparency, and **(3)** make our lives a bit easier. 
+
+These goals becomes increasingly salient in team science settings. 
+
+**Goal 2**: Improve and encourage transparency
+- Force ourselves to think about what we are doing
+- Encourage us to be wary
+- Let others check what we have done
+
+--
+
+**Goal 3**: Make our lives a little easier
+- Reduce stress and labour
+- Have archives ready to go
+- Automate our workflows 
+
+---
+
+class: center, middle
+
+# Reproducibility
+
+???
+Section Title Slide
+
+---
+
+class: left, top
+
+## Reproducibility vs. Replicability
+
+What exactly is reproducibility and how does it differ from replicability (which often gets most of the attention)?
+
+--
+
+.pull-left[
+### Reproducibility:
+- 'Can I **reproduce** your **workflow**?'.
+- Goal: Integrity of the pipeline.
+- Using **your** code and data to reproduce your **results**.
+- Code that is:
+  - Comprehensible
+  - Traceable
+  - Testable
+]
+
+--
+
+.pull-right[
+### Replicability:
+- 'Can I **replicate** your **study**?'
+- Goal: Accuracy of the science.
+- Using **new** code, and possibly data, to re-conduct your **study**
+- Replicability relies on strong reproducibility...
+- ... without it, people don't know what you did!
+- But replication is more expansive than reproduction.
+]
+
+---
+
+class: left, top
+
+## Reproducible Analytical Pipelines (RAP)
+
+Our ultimate goal is to produce what are sometimes called **reproducible analytical pipelines** (RAPs) for our work.
+
+--
+
+What constitutes a RAP?
+- Public: Can be reviewed by pretty much anyone
+- Comprehensive: End-to-end, includes all inputs, produces all outputs
+- Interpretable: Can be understood and executed with minimal effort by you and by others
+
+--
+
+If at the end of the day your typical workflow has some approximation of **these three features**, you are doing **very well**. 
+
+--
+
+It is a good idea to implement the principles of a reproducible workflow **early** in a project, because (good) journals increasingly require them. By the time you all are fighting for tenure it will already be **standard practice**.
+---
+
+class: left, top
+
+## The Reproducibility Hierarchy
+
+Ultimately, we want a **RAP (or codebase)** which is: 
+
+1. Code-based, structured, 'firewalled'
+2. Documented, version-controlled
+3. Functional, modular, DRY, tested
+4. Literate, results-automated
+5. Dependency-proof in terms of: Packages, Changes, Computing Environment
+6. Fully automated
+
+--
+
+If you get to **Tier 1** or **Tier 2**, you are doing **better** than very many (most?) academics.
+
+--
+
+But at a minimum, try to get to **Tier 3**. It's really great if you can get to **Tier 5**. In academia we probably don't usually need to get to  **Tier 6**, but can be valuable in production settings (think back to ELT pipelines). 
+
+--
+
+Note: There is a trade-off between investing in these technologies and productivity. **Choose your balance wisely**.
+
+---
+class: center, middle
+
+# Reproducibility in `R`
+
+???
+Section Title Slide
+
+---
+
+class: left, top
+
+## 1. Code, Structure, Firewalling
+
+Key principles of the first tier: 
+
+--
+
+1. Code-based: Everything you do should happen with code. There are some situations where this is not possible (e.g. manual transcription of data). But code should take over **as early** in the pipeline as possible.
+
+2. Structure: Keep your project folder **hygienically** and **logically** structured.
+
+3. Firewalling: This is a **non-negotiable** -- there must be a **code-based firewall** between your raw data and any data you analyse. 
+
+---
+
+class: left, top
+
+## 2. Version Control
+
+The most common version control tool used by social scientists is `git`. Some of the **basic steps** in the **git workflow**:
+
+1. `git init`: create a new git repo
+2. `git clone [repo path]`: create local copy of repo
+3. `git pull`: fetch latest version of remote repo
+4. `git status`: check status of local repo
+5. `git add .`: propose a change
+6. `git commit -m "Informative message"`: commit a change
+7. `git push origin`: push a change to the remote repo
+
+You might also encounter **branching** (which is conceptually separate):
+
+- `git checkout -b [branch_name]`: create a separate local copy of repo and move to it
+- `git checkout main`: move to the pre-branch local version
+- `git merge [branch name]`: merges the changes in the branch into main
+---
+
+
+class: left, top
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

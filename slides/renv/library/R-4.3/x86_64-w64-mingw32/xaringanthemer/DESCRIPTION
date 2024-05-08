@@ -1,0 +1,32 @@
+Type: Package
+Package: xaringanthemer
+Title: Custom 'xaringan' CSS Themes
+Version: 0.4.2
+Authors@R: 
+    person("Garrick", "Aden-Buie", , "garrick@adenbuie.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7111-0077"))
+Description: Create beautifully color-coordinated and customized themes
+    for your 'xaringan' slides, without writing any CSS. Complete your
+    slide theme with 'ggplot2' themes that match the font and colors used
+    in your slides.  Customized styles can be created directly in your
+    slides' 'R Markdown' source file or in a separate external script.
+License: MIT + file LICENSE
+URL: https://pkg.garrickadenbuie.com/xaringanthemer/,
+        https://github.com/gadenbuie/xaringanthemer
+BugReports: https://github.com/gadenbuie/xaringanthemer/issues
+Depends: R (>= 2.10)
+Imports: colorspace, glue, methods, purrr, utils, whisker
+Suggests: callr, ggplot2, knitr, mockery, rmarkdown, scales, showtext,
+        sysfonts, testthat (>= 2.1.0), xaringan
+VignetteBuilder: knitr
+Config/Needs/website: gadenbuie/grkgdown, pkgdown
+Config/testthat/edition: 3
+Encoding: UTF-8
+RoxygenNote: 7.2.1
+NeedsCompilation: no
+Packaged: 2022-08-20 18:07:41 UTC; garrick
+Author: Garrick Aden-Buie [aut, cre] (<https://orcid.org/0000-0002-7111-0077>)
+Maintainer: Garrick Aden-Buie <garrick@adenbuie.com>
+Repository: CRAN
+Date/Publication: 2022-08-20 18:40:02 UTC
+Built: R 4.3.3; ; 2024-05-01 01:52:19 UTC; windows

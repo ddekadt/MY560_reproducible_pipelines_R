@@ -1,0 +1,156 @@
+tar_active              Show if the pipeline is running.
+tar_assert              Assertions
+tar_backoff             Superseded: exponential backoff
+tar_branch_index        Integer branch indexes
+tar_branch_names        Branch names
+tar_branch_names_raw    Branch names (raw version)
+tar_branches            Reconstruct the branch names and the names of
+                        their dependencies.
+tar_call                Identify the called 'targets' function.
+tar_cancel              Cancel a target mid-execution under a custom
+                        condition.
+tar_canceled            List canceled targets.
+tar_completed           List completed targets.
+tar_condition           Conditions
+tar_config_get          Get configuration settings.
+tar_config_projects     List projects.
+tar_config_set          Set configuration settings.
+tar_config_unset        Unset configuration settings.
+tar_config_yaml         Read _targets.yaml.
+tar_crew                Get crew worker info.
+tar_cue                 Declare the rules that cue a target.
+tar_definition          For developers only: get the definition of the
+                        current target.
+tar_delete              Delete target output values.
+tar_deps                Code dependencies
+tar_deps_raw            Code dependencies (raw version)
+tar_described_as        Select targets using their descriptions.
+tar_destroy             Destroy the data store.
+tar_dispatched          List dispatched targets.
+tar_edit                Open the target script file for editing.
+tar_engine_knitr        Target Markdown 'knitr' engine
+tar_envir               For developers only: get the environment of the
+                        current target.
+tar_envvars             Show 'targets' environment variables.
+tar_errored             List errored targets.
+tar_exist_meta          Check if target metadata exists.
+tar_exist_objects       Check if local output data exists for one or
+                        more targets.
+tar_exist_process       Check if process metadata exists.
+tar_exist_progress      Check if progress metadata exists.
+tar_exist_script        Check if the target script file exists.
+tar_format              Define a custom target storage format.
+tar_github_actions      Set up GitHub Actions to run a targets pipeline
+tar_glimpse             Visualize an abridged fast dependency graph.
+tar_group               Group a data frame to iterate over subsets of
+                        rows.
+tar_helper              Write a helper R script.
+tar_helper_raw          Write a helper R script (raw version).
+tar_interactive         Run if Target Markdown interactive mode is on.
+tar_invalidate          Delete one or more metadata records (e.g. to
+                        rerun a target).
+tar_language            Language
+tar_load                Load the values of targets.
+tar_load_everything     Load the values of all available targets.
+tar_load_globals        Load globals for debugging, testing, and
+                        prototyping
+tar_load_raw            Load the values of targets (raw version).
+tar_make                Run a pipeline of targets.
+tar_make_clustermq      Superseded. Run a pipeline with persistent
+                        'clustermq' workers.
+tar_make_future         Superseded. Run a pipeline of targets in
+                        parallel with transient 'future' workers.
+tar_manifest            Produce a data frame of information about your
+                        targets.
+tar_mermaid             'mermaid.js' dependency graph.
+tar_meta                Read a project's metadata.
+tar_meta_delete         Delete metadata.
+tar_meta_download       download local metadata to the cloud.
+tar_meta_sync           Synchronize cloud metadata.
+tar_meta_upload         Upload local metadata to the cloud.
+tar_name                Get the name of the target currently running.
+tar_network             Return the vertices and edges of a pipeline
+                        dependency graph.
+tar_newer               List new targets
+tar_noninteractive      Run if Target Markdown interactive mode is not
+                        on.
+tar_objects             List saved targets
+tar_older               List old targets
+tar_option_get          Get a target option.
+tar_option_reset        Reset all target options.
+tar_option_set          Set target options.
+tar_outdated            Check which targets are outdated.
+tar_path_script         Current target script path
+tar_path_script_support
+                        Directory path to the support scripts of the
+                        current target script
+tar_path_store          Current data store path
+tar_path_target         Identify the file path where a target will be
+                        stored.
+tar_pattern             Emulate dynamic branching.
+tar_pid                 Get main process ID.
+tar_poll                Repeatedly poll progress in the R console.
+tar_process             Get main process info.
+tar_progress            Read progress.
+tar_progress_branches   Tabulate the progress of dynamic branches.
+tar_progress_summary    Summarize target progress.
+tar_prune               Remove targets that are no longer part of the
+                        pipeline.
+tar_prune_list          List targets that 'tar_prune()' will remove.
+tar_read                Read a target's value from storage.
+tar_read_raw            Read a target's value from storage (raw
+                        version)
+tar_renv                Set up package dependencies for compatibility
+                        with 'renv'
+tar_reprex              Reproducible example of 'targets' with 'reprex'
+tar_resources           Target resources
+tar_resources_aws       Target resources: Amazon Web Services (AWS) S3
+                        storage
+tar_resources_clustermq
+                        Target resources: 'clustermq' high-performance
+                        computing
+tar_resources_crew      Target resources: 'crew' high-performance
+                        computing
+tar_resources_custom_format
+                        Target resources for custom storage formats
+tar_resources_feather   Target resources: feather storage formats
+tar_resources_fst       Target resources: 'fst' storage formats
+tar_resources_future    Target resources: 'future' high-performance
+                        computing
+tar_resources_gcp       Target resources: Google Cloud Platform (GCP)
+                        Google Cloud Storage (GCS)
+tar_resources_network   Target resources for network file systems.
+tar_resources_parquet   Target resources: parquet storage formats
+tar_resources_qs        Target resources: qs storage formats
+tar_resources_url       Target resources: URL storage formats
+tar_script              Write a target script file.
+tar_seed_create         Create a seed for a target.
+tar_seed_get            Get the random number generator seed of the
+                        target currently running.
+tar_seed_set            Set a seed to run a target.
+tar_sitrep              Show the cue-by-cue status of each target.
+tar_skipped             List skipped targets.
+tar_source              Run R scripts.
+tar_target              Declare a target.
+tar_target_raw          Define a target using unrefined names and
+                        language objects.
+tar_test                Test code in a temporary directory.
+tar_timestamp           Get the timestamp(s) of a target.
+tar_timestamp_raw       Get the timestamp(s) of a target (raw version).
+tar_toggle              Choose code to run based on Target Markdown
+                        mode.
+tar_traceback           Get a target's traceback
+tar_unscript            Remove target script helper files.
+tar_unversion           Delete cloud object version IDs from local
+                        metadata.
+tar_validate            Validate a pipeline of targets.
+tar_visnetwork          visNetwork dependency graph.
+tar_watch               Shiny app to watch the dependency graph.
+tar_watch_server        Shiny module server for tar_watch()
+tar_watch_ui            Shiny module UI for tar_watch()
+tar_workspace           Load a saved workspace and seed for debugging.
+tar_workspaces          List saved target workspaces.
+targets-package         targets: Dynamic Function-Oriented Make-Like
+                        Declarative Pipelines for R
+use_targets             Use targets
+use_targets_rmd         Use targets with Target Markdown.

@@ -1,0 +1,212 @@
+---
+title: 'MY560: Reproducible Pipelines Code Walkthrough -- Tier 3'
+author: "Daniel de Kadt"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tier 3: Functional Programming
+
+Let's start with a very brief introduction to the functional programming paradigm. The idea here is that everything we do in an `.R` or `.Rmd` script should be performed via functions. To a degree you are used to this already, as pretty much any package you use delivers its functionality through functions. The idea is to move our functions up one level -- everything we execute should be a contained, scoped, function that does one thing -- reads data, cleans data, merges data, runs an analysis, makes a plot, etc. 
+
+Let's start with something really simple:
+
+```{r add up non-functional}
+# let's start with a clear workspace: 
+rm(list = ls())
+
+# inspect the elements in our workspace: 
+ls()
+
+# now run a few lines of code that produce an output: 
+x <- 10
+y <- 5
+x + y
+
+# inspect the elements in our workspace again. what do we find now?
+ls()
+```
+
+What's happened here? `R` has saved our new objects -- x and y -- to the workspace. Let's see what happens when we use a functional approach instead: 
+
+```{r add up functional}
+# let's clear our workspace one more time: 
+rm(list = ls())
+
+# now turn out simple operation into a function
+add_up <- function(x, y){
+  x + y
+}
+
+# and run it
+add_up(10, 5)
+
+# check the workspace:
+ls()
+
+# clear it again:
+rm(list = ls())
+```
+
+This is somewhat unintuitive at first blush, because we have moved from three lines of code to five lines of code with the same result. 
+
+But we have gained three valuable things: First, we now have a function that, for a given set of inputs, **always** produces the exact same output (think carefully about this -- is it true of every function?). Second, once we create the function we have a way to add two scalars that we can **reuse** for any pair of scalars (and, in fact, for vectors) -- this is the basis for the modularity that comes next. Third, running our function **has no effect** on our workspace.
+
+## Tier 3: Modular Programming
+
+Now that we are working with functions, we can see how they support a **modular** approach to programming. That is, each function, or collection of functions (which can themselves be nested in a function), represents a module of code. Those modules are flexible in that we can change the inputs -- which changes the outputs -- but if the functions are well written we should **know** the singular mapping of inputs to outputs. 
+
+Let's see how our very simple add_up function can work in a modular fashion: 
+
+```{r add up modular}
+source("./R/functions/function_add_up.R")
+add_up(10, 5)
+add_up(9, 2)
+add_up(c(10,55,100), c(9,2,1))
+
+pairs <- data.frame(x = rnorm(100,0,1), y = rnorm(100,0,1), sum = NA)
+
+for(i in 1:nrow(pairs)){
+  pairs$sum[i] <- add_up(pairs$x[i], pairs$y[i])
+}
+
+head(pairs)
+
+# clean up the workspace:
+rm(list = ls())
+```
+
+By combining functions and a modular approach we are moving toward **DRY** (Don't Repeat Yourself) code. 
+
+## Tier 3: Building a Functional, Modular Workflow
+
+Let's play around with the very simple workflow that we developed earlier. First, we've moved it all into a single chunk below, but it's basically the same code. Remember, we already satisfied Tier 1 (and 2) for the most part. Note that the code is currently pretty DRY, but imagine what would happen if we wanted to run a **different** analysis... Say we wanted to study how `Happiness_score` and `Life_expectancy` correlate, instead of `GDP_pc`. With our current script we would have to get **WET** -- we might copy and paste our `ggplot()` code and change the variables. Things would get even worse if we customised the code with some tweaks to the `ggplot` theme -- we'd get really WET!
+
+```{r script workflow}
+# some setup: a cheeky little bit of code to check and install packages
+need <- c("tidyverse","stargazer") # list packages needed
+have <- need %in% rownames(installed.packages()) # checks packages you have
+if(any(!have)) install.packages(need[!have]) # install missing packages
+invisible(lapply(need, library, character.only=T)) # load needed packages
+ 
+# some more setup: pathing and folder structure
+table_dir <- "./output/tables/"
+figure_dir <- "./output/figures/"
+data_folder <- "./data/raw/"
+  
+# let's start by ingesting the data
+file <- "WHR_2017.csv"
+data <- read_csv(paste0(data_folder,file))
+head(data)
+
+# now we will do a little data munging to two variables of interest. we will standardize these two variables. 
+variables <- c("Happiness_score", "GDP_pc")
+
+scaled_data <- data %>%
+  mutate_at(variables, scale)
+
+# let's just inspect the data, and check that it actually changed...
+head(scaled_data)
+
+data$Happiness_score[1] == scaled_data$Happiness_score[1] # should be FALSE
+
+# next we will make a very simple two-way scatter of these two scaled. let's save the output to our output folder.
+plot <- ggplot(scaled_data) +
+          geom_point(aes(x = GDP_pc, y = Happiness_score)) +
+          theme_minimal()
+ggsave(plot, file = paste0(figure_dir,"plot_gdp_pc.jpg"))
+
+# finally, let's run a simple regression of these two variables, and save the output as a latex table.
+lm(Happiness_score ~ GDP_pc, data = data)  |>
+  stargazer(out = paste0(table_dir,"table_gdp_pc.tex"))
+
+# clean up the workspace again:
+rm(list = ls())
+```
+
+Because we want to stay DRY, we're going to take a simple but important step. We are going to convert all of these to functions that can take variable arguments:
+
+```{r functions workflow}
+# our package function
+package_check <- function(need = c()){
+  have <- need %in% rownames(installed.packages()) # checks packages you have
+  if(any(!have)) install.packages(need[!have]) # install missing packages
+  invisible(lapply(need, library, character.only=T))
+}
+
+# our function to ingest the data -- this one is really easy!
+ingest_data <- function(file) {
+  read_csv(file)
+}
+
+# our function to scale the data -- the code changes slightly here to allow variables to be passed through
+scale_data <- function(foo, variables) {
+  foo_scaled <- foo %>% 
+    mutate_at(variables, ~(scale(.) %>% as.vector))
+  return(foo_scaled)
+}
+
+# our function to make a simple plot -- here we need to use get() to pass variable strings through
+simple_plot <- function(foo, yvar, xvar, outdir, fname) {
+  plot <- ggplot(foo) +
+            geom_point(aes(x = get(xvar), y = get(yvar))) +
+            theme_minimal()
+  ggsave(plot, file = paste0(outdir, fname))
+}
+
+# our function to run a simple regression -- here we need to use get() to pass variable strings through
+simple_reg <- function(foo, yvar, xvar, outdir, fname) {
+  model <- lm(get(yvar) ~ get(xvar), data = foo) %>% 
+    stargazer(out = paste0(outdir, filename))
+}
+
+# let's run our program, defining a few macro variables at the top feed into the various functions:
+table_dir <- "./output/tables/"
+figure_dir <- "./output/figures/"
+package_check(c("tidyverse","stargazer"))
+yvar = "Happiness_score"
+xvar = "GDP_pc"
+
+data <- ingest_data("./data/raw/WHR_2017.csv")
+data_scaled <- scale_data(data, c("Happiness_score", "GDP_pc"))
+simple_plot(data_scaled, yvar = yvar, xvar = xvar, outdir = figure_dir, fname = "plot_gdp_pc_function.jpg") # diff names just for show
+simple_plot(data_scaled, yvar = yvar, xvar = xvar, outdir = table_dir, fname = "table_gdp_pc_function.tex")
+
+# clean up the workspace again:
+rm(list = ls())
+```
+
+This is much neater than the stream-of-consciousness script that we started with. Every step is clearly demarcated, scoped, and contained. Let's go one step further and move toward modularity. First, we are going to create a new file called `functions.R` in our functions folder. In it we will include the code we just developed above (up until the "let's run our program" line). We are then going to `source()` that file, which will generate our function objects in the workspace, and then create a new function out of those functions which executes our program. 
+
+```{r modular functions workflow}
+source("./R/functions/functions.R")
+
+our_program <- function(table_dir = "./output/tables/", 
+                        figure_dir = "./output/figures/", 
+                        file = "./data/raw/WHR_2017.csv", 
+                        pkgs = c("tidyverse","stargazer")){
+
+  package_check(pkgs)
+  
+  yvar = "Happiness_score"
+  xvar = "GDP_pc"
+  
+  data <- ingest_data(file)
+  data_scaled <- scale_data(data, c("Happiness_score", "GDP_pc"))
+  simple_plot(data_scaled, yvar = yvar, xvar = xvar, outdir = figure_dir, fname = "plot_gdp_pc_function.jpg")
+  simple_reg(data_scaled, yvar = yvar, xvar = xvar, outdir = table_dir, fname = "table_gdp_pc_function.tex")
+}
+
+our_program()
+
+# look how clean our workspace is... not bad
+ls()
+```
+
+What we have here is now pretty powerful. In a few lines of top-level code we could vary the cleaning of our data, produce lots of varied analyses and plots, save them in a strong data structure. If we want to make changes to our program we know precisely where to look in the codebase. We would implement those changes, re-source, and then re-run our program. 
+
+We could now save this script as something like `runner.R`, have it in the top directory, and be done with our pipeline... but there are some things missing, perhaps.
