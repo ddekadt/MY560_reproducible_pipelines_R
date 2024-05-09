@@ -91,10 +91,10 @@ If Tier 1 is where you end your reproducibility workflow (which is ok!), you wil
 
 The next tier is pretty straightforward. We want to make sure what we are doing is **well documented** and that we use appropriate version control. We've already been doing a pretty good job on the documentation front. For version control, most people use `git`, either through github or gitlab. If you have forked this repo, feel free to now experiment with a few git commands using the terminal in RStudio (next to the console) or elsewhere (e.g. git Bash). If you haven't yet, try to make a few changes to the code above before you do the following in the terminal:
 
-`git pull` (this pulls down the most recent version of the remote repo -- **ALWAYS** do this before you start changing things. **ALWAYS**)
+`git pull` (this pulls down the most recent version of the remote repo (the `origin`) -- **ALWAYS** do this before you start changing things. **ALWAYS**)
 `git status` (this checks the status of your local version compared to the remote -- red files are unstaged changes, green are staged changes in your local version)
 `git add .` (this stages **all** your changed files in the index -- try `git status` after you run this and see what has changed in the feedback)
 `git commit -m 'INFORMATIVE MESSAGE'` (this commits your staged changes to the local HEAD -- make sure you include a useful short message)
-`git push origin main` (this pushes your HEAD to the main remote repo, updating the remote repo with the changes you have made)
+`git push origin main` (this pushes your version of the repo (`main` in this case, because you are on the `main` branch -- we haven't checked out a new branch) to the remote repo (`origin`), updating the remote repo with the changes you have made.)
 
 Well done, you have version controlled this script! But you will need to keep it up... 
