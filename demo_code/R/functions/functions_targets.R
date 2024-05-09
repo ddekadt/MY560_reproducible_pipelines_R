@@ -21,12 +21,12 @@ scale_data <- function(foo, variables) {
 simple_plot <- function(foo, yvar, xvar, outdir, fname) {
   plot <- ggplot(foo) +
     geom_point(aes(x = get(xvar), y = get(yvar))) +
-    theme_minimal()
-  ggsave(plot, file = paste0(outdir, fname))
+    theme_bw()
+  plot
 }
 
-# our function to run a simple regression:
+# our updated function with a square term:
 simple_reg <- function(foo, yvar, xvar, outdir, fname) {
-  model <- lm(get(yvar) ~ get(xvar), data = foo) %>% 
-    stargazer(out = paste0(outdir, fname))
+  model <- lm(get(yvar) ~ get(xvar) + I(get(xvar)^2), data = foo) %>% 
+    summary()
 }

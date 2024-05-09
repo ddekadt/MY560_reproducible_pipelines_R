@@ -4,18 +4,20 @@
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
 # Load packages required to define the pipeline:
-library(targets)
+library(groundhog)
+groundhog::groundhog.library(c("targets", "dplyr", "readr", "ggplot2", "stargazer"), "2024-05-02")
+
 # library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
-tar_option_set(
-  packages = c("tidyverse", "stargazer") # Packages that your targets need for their tasks.
-)
+#tar_option_set(
+#  packages = c("tidyverse", "stargazer") # Packages that your targets need for their tasks.
+#)
 
 # Run the R scripts in the R/ folder with your custom functions:
 tar_source("./R/functions/functions.R")
 
-# Some macros:
+# Define global variables:
 table_dir <- "./output/tables/"
 figure_dir <- "./output/figures/"
 
