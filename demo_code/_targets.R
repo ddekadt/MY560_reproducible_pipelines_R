@@ -34,18 +34,18 @@ list(
     command = scale_data(data, variables = c("Happiness_score", "GDP_pc", "Life_expectancy"))),
   
   tar_target(
-    name = model_gdp_pc,
+    name = plot_gdp_pc ,
     command = simple_plot(data_scaled, yvar = "Happiness_score", xvar = "GDP_pc", outdir = figure_dir, fname = "plot_gdp_pc_target.jpg")),
   
   tar_target(
-    name = model_life_exp,
+    name = plot_life_exp,
     command = simple_plot(data_scaled, yvar = "Happiness_score", xvar = "Life_expectancy", outdir = figure_dir, fname = "plot_life_exp_target.jpg")),
   
   tar_target(
-    name = plot_gdp_pc,
+    name = model_gdp_pc,
     command = simple_reg(data_scaled, yvar = "Happiness_score", xvar = "GDP_pc", outdir = table_dir, fname = "table_gdp_pc_target.tex")),
   
   tar_target(
-    name = plot_life_exp,
+    name = model_life_exp,
     command = simple_reg(data_scaled, yvar = "Happiness_score", xvar = "Life_expectancy", outdir = table_dir, fname = "table_life_exp_target.tex"))
 )

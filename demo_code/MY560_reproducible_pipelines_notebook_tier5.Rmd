@@ -17,8 +17,8 @@ The best thing about `R` is all the packages. This is also the worst thing about
 
 library(groundhog)
 
-groundhog.date <- Sys.Date()-7
-pkgs <- c("dplyr", "targets")
+groundhog.date <- Sys.Date()-7 # Do not do this!!! Set an expplicit date!
+pkgs <- c("dplyr", "ggplot2", "targets")
 groundhog::groundhog.library(pkgs, groundhog.date)
 
 ```

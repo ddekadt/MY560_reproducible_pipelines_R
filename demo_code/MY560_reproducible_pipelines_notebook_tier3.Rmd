@@ -167,9 +167,10 @@ simple_reg <- function(foo, yvar, xvar, outdir, fname) {
 # let's run our program, defining a few macro variables at the top feed into the various functions:
 table_dir <- "./output/tables/"
 figure_dir <- "./output/figures/"
-package_check(c("tidyverse","stargazer"))
 yvar = "Happiness_score"
 xvar = "GDP_pc"
+
+package_check(c("tidyverse","stargazer"))
 
 data <- ingest_data("./data/raw/WHR_2017.csv")
 data_scaled <- scale_data(data, c("Happiness_score", "GDP_pc"))
