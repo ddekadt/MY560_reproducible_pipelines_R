@@ -56,9 +56,9 @@ This is somewhat unintuitive at first blush, because we have moved from three li
 
 But we have gained three valuable things: First, we now have a function that, for a given set of inputs, **always** produces the exact same output (think carefully about this -- is it true of every function?). Second, once we create the function we have a way to add two scalars that we can **reuse** for any pair of scalars (and, in fact, for vectors) -- this is the basis for the modularity that comes next. Third, running our function **has no effect** on our workspace. This last point is worth dwelling on. When we use a script-based approach, we are creating a lot of clutter in the `R` environment. This carries with it some risks: it means that there are now defined objects floating around that we can **accidentally** reference, or **accidentally** overwrite and then reference. By using (good) functions we are **containing** code within a defined scope, which reduces these risks. 
 
-## Tier 3: Modular Programming
+## Tier 3: Modular Programming and Getting DRY
 
-Now that we are working with functions, we can see how they support a **modular** approach to programming. That is, each function, or collection of functions (which can themselves be nested in a function), represents a module of code. Those modules are flexible in that we can change the inputs -- which changes the outputs -- but if the functions are well written we should **know** the singular mapping of inputs to outputs. 
+Now that we are working with functions, we can see how they support a **modular** approach to programming. That is, each function, or collection of functions (which can themselves be nested in a function), represents a **module of code**. Those modules are flexible in that we can change the inputs -- which changes the outputs -- but if the functions are well written we should **know** the singular mapping of inputs to outputs. 
 
 Let's see how our very simple add_up function can work in a modular fashion: 
 
@@ -84,7 +84,7 @@ By combining functions and a modular approach we are moving toward **DRY** (Don'
 
 ## Tier 3: Building a Functional, Modular Workflow
 
-Let's play around with the very simple workflow that we developed earlier. First, we've moved it all into a single chunk below, but it's basically the same code. Remember, we already satisfied Tier 1 (and 2) for the most part. Note that the code is currently pretty DRY, but imagine what would happen if we wanted to run a **different** analysis... Say we wanted to study how `Happiness_score` and `Life_expectancy` correlate, instead of `GDP_pc`. With our current script we would have to get **WET** -- we might copy and paste our `ggplot()` code and change the variables. Things would get even worse if we customised the code with some tweaks to the `ggplot` theme -- we'd get really WET!
+Let's play around with the very simple workflow that we developed earlier. First, we've moved it all into a single chunk below, but it's basically the same code. Remember, we already satisfied Tier 1 (and 2) for the most part. Note that the code is currently pretty DRY, but imagine what would happen if we wanted to run a **different** analysis... Say we wanted to study how `Happiness_score` and `Life_expectancy` correlate, instead of `GDP_pc`. With our current script we would have to get **WET** -- we might copy and paste our `ggplot()` code and change the variables. Things would get even worse if we customised the code with some tweaks to the `ggplot` theme -- we'd get really **WET**!
 
 ```{r script workflow}
 # some setup: a cheeky little bit of code to check and install packages
@@ -128,7 +128,7 @@ lm(Happiness_score ~ GDP_pc, data = data)  |>
 rm(list = ls())
 ```
 
-Because we want to stay DRY, we're going to take a simple but important step. We are going to convert all of these to functions that can take variable arguments:
+Because we want to stay **DRY**, we're going to take a simple but important step. We are going to convert all of these to functions that can take variable arguments:
 
 ```{r functions workflow}
 # our package function
