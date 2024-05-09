@@ -27,21 +27,23 @@ What's going on in the above code chunk? Essentially, we specify a date (this da
 
 ## Tier 5: Targets for Dependency Detection
 
-We're now going to experiment with an automated workflow with understood dependencies. We will use the package `targets` to do so. The idea here is that we will build a directed acyclic graph (DAG) that represents the various objects (function!) in our workflow, and how they are connected.
+We're now going to experiment with an automated workflow with understood dependencies. We will use the package `targets` to do so. The idea here is that we will build a directed acyclic graph (DAG) that represents the various objects (function!) in our workflow, and how they are connected. The function `use_targets()` creates a `_targets.R` file for us (in this repo it is already created and has been edited ahead of time). We use this file to **orchestrate** our workflow -- indicating what the order of operations, and dependencies is. It's easier than it sounds!
 
 ```{r targets}
 use_targets()
 tar_manifest()
 tar_visnetwork()
 
-# now we execute the files, and look at our results
+# now we execute our program
 tar_make()
+
+# and we can inspect the results
 tar_read(model_life_exp)
 tar_read(model_gdp_pc)
 tar_read(plot_life_exp)
 tar_read(plot_gdp_pc)
 
-# let's re-inspect our workflow: 
+# let's re-inspect our workflow DAG:
 tar_visnetwork()
 
 # now let's go and edit our functions... then check the network... then re-run
@@ -49,7 +51,7 @@ tar_visnetwork()
 tar_make()
 ```
 
-One thing to note: I'm not 100% sure at this point how `groundhog` and `targets` interact. If you want to use package freezing and `targets`, it seems that `renv` is well supported -- there is a `tar_renv()` function in `targets`. 
+Note that we have interwoven our package dependency solution (in this case `groundhog`, but you could easily do the same with `renv`) into `targets`. Check the `_targets.R` file -- we have replaced the `library(targets)` call with `groundhog::groundhog.library` for all our packages. Note, this is slightly less efficient than the built in `tar_set_opts()` function in that we will **always** run the package call, rather than **only** those packages required for the targets that need to be rerun -- using `tar_renv()` will support this. But for most applications the `groundhog` approach should be ok.
 
 
 
