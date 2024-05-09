@@ -76,7 +76,7 @@ I will present this from the perspective of an applied researcher who works exte
 
 --
 
-What I will present is **introductory**. This is a fast moving space, and **everyone** has opinions about 'best practices.' I find this quite overwhelming myself, and try to think about it in the old photographer's maxim: 'The best camera is the one you have with you.'
+What I will present is **introductory**. This is a fast moving space, and **everyone** has opinions about 'best practices.' I find this quite overwhelming myself, and try to use the old photographer's maxim: 'The best camera is the one you have with you.'
 
 --
 
@@ -108,7 +108,7 @@ Let's define a typical workflow for data-intensive social science as a **pipelin
 4. Output: Format and produce results (tables, figures)
 5. Reporting: Putting the results into paper/slides
 
-Note: In the data/analytics engineering world the first two parts of this are called an **ETL** (extract, load, transform) or **ETL** pipeline. 
+Note: In the data/analytics engineering world the first two parts of this are called an **ELT** (extract, load, transform) or **ETL** pipeline. 
 
 --
 
