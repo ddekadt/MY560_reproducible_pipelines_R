@@ -95,6 +95,6 @@ The next tier is pretty straightforward. We want to make sure what we are doing 
 `git status` (this checks the status of your local version compared to the remote -- red files are unstaged changes, green are staged changes in your local version)
 `git add .` (this stages **all** your changed files in the index -- try `git status` after you run this and see what has changed in the feedback)
 `git commit -m 'INFORMATIVE MESSAGE'` (this commits your staged changes to the local HEAD -- make sure you include a useful short message)
-`git push origin head` (this pushes your HEAD to the main remote repo, updating the remote repo with the changes you have made)
+`git push origin main` (this pushes your HEAD to the main remote repo, updating the remote repo with the changes you have made)
 
 Well done, you have version controlled this script! But you will need to keep it up... 
