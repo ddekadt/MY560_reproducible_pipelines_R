@@ -1,3 +1,10 @@
+# our package function
+package_check <- function(need = c()){
+  have <- need %in% rownames(installed.packages()) # checks packages you have
+  if(any(!have)) install.packages(need[!have]) # install missing packages
+  invisible(lapply(need, library, character.only=T))
+}
+
 # our function to ingest the data
 ingest_data <- function(file) {
   read_csv(file)

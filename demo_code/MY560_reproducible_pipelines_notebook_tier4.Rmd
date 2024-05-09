@@ -23,7 +23,8 @@ First, note two things: 1) in the `setup` chunk above, we set `knitr::opts_chunk
 For example, we could include our program that we wrote before (well, slightly modified) to produce the figure we made at this point in the document. Obviously you probably wouldn't want to do exactly this in a document (you'd probably not do the cleaning repeatedly in chunks like these), but for our purposes it's ok.
 
 ```{r plot_example, message=FALSE, warning=FALSE, results='hide'}
-source("./R/functions/functions.R")
+# note we are calling a slightly different function file -- the functions are basically the same but they output results for markdown, instead of writing them to disk. that way we see the results (in this case just a plot) in our .html or .pdf document.
+source("./R/functions/functions_targets.R")
 
 plot_program <- function(table_dir = "./output/tables/", 
                         figure_dir = "./output/figures/", 
