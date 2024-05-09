@@ -202,12 +202,13 @@ our_program <- function(table_dir = "./output/tables/",
   simple_reg(data_scaled, yvar = yvar, xvar = xvar, outdir = table_dir, fname = "table_gdp_pc_function.tex")
 }
 
+# now let's run just one line of code:
 our_program()
 
 # look how clean our workspace is... not bad
 ls()
 ```
 
-What we have here is now pretty powerful. In a few lines of top-level code we could vary the cleaning of our data, produce lots of varied analyses and plots, save them in a strong data structure. If we want to make changes to our program we know precisely where to look in the codebase. We would implement those changes, re-source, and then re-run our program. 
+What we have here is now pretty powerful. In a few lines of top-level code we could vary the cleaning of our data, produce lots of varied analyses and plots, save them in a strong and hygenic folder structure. If we want to make changes to our program we know precisely where to look in the codebase. We would implement those changes, re-source, and then re-run our program. Life is pretty good.
 
-We could now save this script as something like `runner.R`, have it in the top directory, and be done with our pipeline... but there are some things missing, perhaps.
+We could now save this script as something like `runner.R`, have it in the top directory, and be done with our pipeline... but there are some things missing, perhaps...
