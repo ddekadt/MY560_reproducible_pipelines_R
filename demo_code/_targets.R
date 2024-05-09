@@ -3,7 +3,7 @@
 # Then follow the manual to check and run the pipeline:
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
-# Load packages required to define the pipeline:
+# Load packages required to define the pipeline -- using groundhog for reproducibility
 library(groundhog)
 groundhog::groundhog.library(c("targets", "dplyr", "readr", "ggplot2", "stargazer"), "2024-05-02")
 
@@ -15,7 +15,7 @@ groundhog::groundhog.library(c("targets", "dplyr", "readr", "ggplot2", "stargaze
 #)
 
 # Run the R scripts in the R/ folder with your custom functions:
-tar_source("./R/functions/functions.R")
+tar_source("./R/functions/functions_targets.R")
 
 # Define global variables:
 table_dir <- "./output/tables/"
