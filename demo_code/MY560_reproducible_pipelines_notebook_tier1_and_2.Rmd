@@ -69,6 +69,9 @@ ggsave(plot, file = paste0(figure_dir,"plot_gdp_pc.jpg"))
 lm(Happiness_score ~ GDP_pc, data = data)  |>
   stargazer(out = paste0(table_dir,"table_gdp_pc.tex"))
 
+# add a funny joke:
+print("hahahaha")
+
 # clean up the workspace again:
 rm(list = ls())
 ```
