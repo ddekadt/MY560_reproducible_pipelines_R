@@ -3,7 +3,7 @@
 # Then follow the manual to check and run the pipeline:
 #   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
-# Load packages required to define the pipeline -- using groundhog for reproducibility
+# Load packages required to define the pipeline -- using groundhog for reproducibility, this is a bit inefficient but works ok
 library(groundhog)
 groundhog::groundhog.library(c("targets", "dplyr", "readr", "ggplot2", "stargazer"), "2024-05-02")
 
