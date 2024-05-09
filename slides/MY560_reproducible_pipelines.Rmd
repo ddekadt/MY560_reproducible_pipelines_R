@@ -25,8 +25,6 @@ style_solarized_light(
 )
 ```
 
----
-
 class: left, top
 
 ## Welcome!
@@ -303,7 +301,7 @@ class: left, top
 
 .pull-left[
 - Consider LaCour and Green (2014, _Science_): randomized conversations with gay canvassers $\uparrow$ tolerance
-- Broockman, Kalla, and Aronow (2015) diagnose alleged fraud by LaCour.
+- Broockman, Kalla, and Aronow (2015) diagnose **alleged fraud** by LaCour.
 ]
 
 .pull-right[
@@ -502,7 +500,7 @@ You might also encounter **branching** (which is conceptually separate):
 ---
 class: center, middle
 
-# Let's Move to Code! (See `Demo_Code` Folder)
+# Let's Code! (See `Demo_Code` Folder)
 
 ???
 Section Title Slide
