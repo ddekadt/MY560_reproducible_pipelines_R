@@ -64,7 +64,7 @@ Who am I (and who am I not)?
 
 --
 
-I am an applied social scientist, with some experience in **academia and tech**.
+I am an applied social scientist with some experience in **academia and tech**.
 
 --
 
@@ -193,9 +193,9 @@ Scientists **make mistakes** and sometimes misbehave. Much of this happens in th
 
 A few different flavours (non-exhaustive): 
 
-1. Technical errors: mis-specified analyses, mis-implemented analyses, mis-coding data, etc.
-2. Reasoning errors: forking paths, unconscious p-hacking, mis-reporting results, etc.
-3. Actual dishonesty: fabricating data, manipulating data, massaging results and specifications, etc.
+1. **Technical** errors: mis-specified analyses, mis-implemented analyses, mis-coding data, etc.
+2. **Reasoning** errors: forking paths, unconscious p-hacking, mis-reporting results, etc.
+3. Actual **dishonesty**: fabricating data, manipulating data, massaging results and specifications, etc.
 
 ---
 
