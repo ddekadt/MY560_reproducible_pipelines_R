@@ -15,6 +15,8 @@ groundhog::groundhog.library(c("targets", "dplyr", "readr", "ggplot2", "stargaze
 #)
 
 # Run the R scripts in the R/ folder with your custom functions:
+# Note: we are using a **different** script here to the one we used before -- now functions_targets.R. This is just because I wanted to use functions
+# that return figures/tables to the workspace, rather than writing files to disk. You can use either, it doesn't matter.
 tar_source("./R/functions/functions_targets.R")
 
 # Define global variables:

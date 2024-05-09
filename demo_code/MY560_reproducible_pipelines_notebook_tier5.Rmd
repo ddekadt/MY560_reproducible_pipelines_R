@@ -31,8 +31,12 @@ We're now going to experiment with an automated workflow with understood depende
 
 ```{r targets}
 use_targets()
+
+# let's look at what the targets (modules) of our program are:
 tar_manifest()
-tar_visnetwork()
+
+# and now let's look at the orchestration DAG (note, you can move the nodes around and zoom in/out):
+tar_visnetwork() 
 
 # now we execute our program
 tar_make()
@@ -43,10 +47,13 @@ tar_read(model_gdp_pc)
 tar_read(plot_life_exp)
 tar_read(plot_gdp_pc)
 
-# let's re-inspect our workflow DAG:
+# let's re-inspect our workflow DAG -- what has changed? 
 tar_visnetwork()
 
-# now let's go and edit our functions... then check the network... then re-run
+# try to re-make the pipeline -- what happens? 
+tar_make()
+
+# now let's go and edit our actual functions... then check the network... then re-run -- what happens? 
 tar_visnetwork()
 tar_make()
 ```
