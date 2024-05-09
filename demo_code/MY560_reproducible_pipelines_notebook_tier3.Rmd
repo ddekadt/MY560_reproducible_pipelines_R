@@ -54,7 +54,7 @@ rm(list = ls())
 
 This is somewhat unintuitive at first blush, because we have moved from three lines of code to five lines of code with the same result. 
 
-But we have gained three valuable things: First, we now have a function that, for a given set of inputs, **always** produces the exact same output (think carefully about this -- is it true of every function?). Second, once we create the function we have a way to add two scalars that we can **reuse** for any pair of scalars (and, in fact, for vectors) -- this is the basis for the modularity that comes next. Third, running our function **has no effect** on our workspace.
+But we have gained three valuable things: First, we now have a function that, for a given set of inputs, **always** produces the exact same output (think carefully about this -- is it true of every function?). Second, once we create the function we have a way to add two scalars that we can **reuse** for any pair of scalars (and, in fact, for vectors) -- this is the basis for the modularity that comes next. Third, running our function **has no effect** on our workspace. This last point is worth dwelling on. When we use a script-based approach, we are creating a lot of clutter in the `R` environment. This carries with it some risks: it means that there are now defined objects floating around that we can **accidentally** reference, or **accidentally** overwrite and then reference. By using (good) functions we are **containing** code within a defined scope, which reduces these risks. 
 
 ## Tier 3: Modular Programming
 
@@ -80,7 +80,7 @@ head(pairs)
 rm(list = ls())
 ```
 
-By combining functions and a modular approach we are moving toward **DRY** (Don't Repeat Yourself) code. 
+By combining functions and a modular approach we are moving toward **DRY** (Don't Repeat Yourself) code. Note: Of course, this is a silly example, because we could easily just add the two vectors in `R` and it would complete the task for us trivially. But hopefully you take the broader point.
 
 ## Tier 3: Building a Functional, Modular Workflow
 
